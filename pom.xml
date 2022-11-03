@@ -11,8 +11,8 @@
     <groupId>com.example</groupId>
     <artifactId>softwareinventory</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>softwareinventory</name>
-    <description>softwareinventory</description>
+    <name>software-inventory</name>
+    <description>software-inventory</description>
     <properties>
         <java.version>11</java.version>
     </properties>
