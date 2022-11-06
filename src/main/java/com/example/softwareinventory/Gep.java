@@ -11,13 +11,13 @@ public class Gep {
     private int id;
 
     @Column(name = "hely")
-    private String hely;
+    private String location;
 
     @Column(name = "tipus")
-    private String tipus;
+    private String type;
 
     @Column(name = "ipcim")
-    private String ipcim;
+    private String ip_address;
 
     public int getId() {
         return id;
@@ -27,27 +27,27 @@ public class Gep {
         this.id = id;
     }
 
-    public String getHely() {
-        return hely;
+    public String getLocation() {
+        return location;
     }
 
-    public void setHely(String hely) {
-        this.hely = hely;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getTipus() {
-        return tipus;
+    public String getType() {
+        return type;
     }
 
-    public void setTipus(String tipus) {
-        this.tipus = tipus;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getIpcim() {
-        return ipcim;
+    public String getIp_address() {
+        return ip_address;
     }
 
-    public void setIpcim(String ipcim) {
-        this.ipcim = ipcim;
+    public void setIp_address(String ip_address) {
+        this.ip_address = ip_address;
     }
 }

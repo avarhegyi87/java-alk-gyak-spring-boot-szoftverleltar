@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <title>Regisztráció</title>
+</head>
+<body>
+<div th:insert="menu"></div>
+<h3>Regisztrálja magát!</h3>
+<form action="#" th:action="@{/regisztral_feldolgoz}" th:object="${reg}" method="post">
+  <fieldset>
+    <legend>Regisztráció</legend>
+    <p><input type="text" th:field="*{username}" placeholder="Felhasználónév" required></p>
+    <p><input type="email" th:field="*{email}" placeholder="Email cím"></p>
+    <p><input type="password" th:field="*{password}" placeholder="Jelszó" required></p>
+    <p><input type="submit" value="Regisztráció"></p>
+  </fieldset>
+</form>
+</body>
+</html>
