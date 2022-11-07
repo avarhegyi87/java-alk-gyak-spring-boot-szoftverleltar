@@ -6,7 +6,7 @@
         <a th:href="@{/kapcsolat}">Írjon nekünk!</a>
         <a th:href="@{/uzenetek}">Önök küldték</a>
         <span sec:authorize="isAnonymous()">
-            <a th:href="@{/bejelentkezes}">Bejelentkezés</a>
+            <a th:href="@{/login}">Bejelentkezés</a>
             <a th:href="@{/regisztral}">Regisztráció</a>
         </span>
         <span sec:authorize="isAuthenticated()">

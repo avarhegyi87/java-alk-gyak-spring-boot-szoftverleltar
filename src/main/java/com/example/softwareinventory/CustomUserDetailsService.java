@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
-        String[] userRoles = user.getSzerepkorok().stream().map(Role::getName).toArray(String[]::new);
+        String[] userRoles = user.getRoles().stream().map(Role::getName).toArray(String[]::new);
         return AuthorityUtils.createAuthorityList(userRoles);
     }
 }

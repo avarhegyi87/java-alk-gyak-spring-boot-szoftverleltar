@@ -13,7 +13,7 @@ public class Role {
     @Column(name = "szerepkor", nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "szerepkorok")
+    @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
     public Integer getId() {

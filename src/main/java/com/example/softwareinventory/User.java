@@ -33,7 +33,7 @@ public class User {
             joinColumns = {@JoinColumn(name = "FELHASZNALO_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "SZEREPKOR_ID", referencedColumnName = "ID")}
     )
-    private List<Role> szerepkorok;
+    private List<Role> roles;
 
     public Integer getId() {
         return id;
@@ -67,11 +67,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Role> getSzerepkorok() {
-        return szerepkorok;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setSzerepkorok(List<Role> roles) {
-        this.szerepkorok = roles;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
