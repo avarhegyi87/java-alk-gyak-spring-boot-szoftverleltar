@@ -1,6 +1,8 @@
 package com.example.softwareinventory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,11 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.softwareinventory.Message.getTextForMessageType;
 
 @Controller
 public class HomeController {
@@ -37,13 +40,43 @@ public class HomeController {
     }
 
     @GetMapping("/kapcsolat")
-    public String kapcsolat() {
+    public String kapcsolat(Model model) {
+        model.addAttribute("msg", new Message());
         return "kapcsolat";
     }
 
     @GetMapping("/uzenetek")
-    public String uzenetek() {
+    public String uzenetek(Model model) {
+        model.addAttribute("msg", new Message());
         return "uzenetek";
+    }
+
+    @PostMapping("/uzenetkuld")
+    public String UzenetKuldes(@Valid @ModelAttribute Message message,
+                        Model model,
+                        @CurrentSecurityContext(expression = "authentication") Authentication auth,
+                               @CurrentSecurityContext(expression = "authentication?.name") String loggInUserName) {
+        try {
+            SzoftverleltarDbManager manager = new SzoftverleltarDbManager();
+            //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+            if (auth.isAuthenticated() && loggInUserName != "anonymousUser") {
+                message.setUserId(manager.getUserIdFromUserName(loggInUserName));
+                message.setUserName(loggInUserName);
+            } else {
+                message.setUserName("Vendég");
+            }
+            message.setMessageType(getTextForMessageType(message.getMessageType()));
+            if (manager.insertMessage(message)) {
+                return "uzenetjo";
+            } else {
+                return "uzenethiba";
+            }
+
+        } catch (Exception e) {
+            model.addAttribute("uzenet", e.getMessage());
+            return "uzenethiba";
+        }
     }
 
     @GetMapping("/regisztral")
@@ -64,9 +97,8 @@ public class HomeController {
             return "reghiba";
         }
         try {
-            for (User user2 :
-                    userRepo.findAll()) {
-                if (user2.getEmail().equals(user.getEmail())) {
+            for (User userCurrent : userRepo.findAll()) {
+                if (userCurrent.getEmail().equals(user.getEmail())) {
                     model.addAttribute("uzenet", "Ez az email már foglalt!");
                     return "reghiba";
                 }
@@ -76,15 +108,15 @@ public class HomeController {
             Role role = new Role();
             role.setId(2);
             role.setName("ROLE_USER");
-            List<Role> roleList = new ArrayList<Role>();
+            List<Role> roleList;
+            roleList = new ArrayList<Role>();
             roleList.add(role);
             user.setRoles(roleList);
             userRepo.save(user);
             model.addAttribute("id", user.getId());
             return "regjo";
         } catch (Exception e) {
-            model.addAttribute("uzenet", e.getMessage() + ", " +
-                    "Felhasználó: " + user.getId() + " - " + user.getUsername() + " - " + user.getEmail() + " - " + user.getRoles().toString());
+            model.addAttribute("uzenet", e.getMessage());
             return "reghiba";
         }
 
