@@ -10,14 +10,15 @@
 <form action="#" th:action="@{/uzenetkuld}" th:object="${msg}" method="post">
     <fieldset>
         <legend>Üzenete</legend>
-        <p>Válassza ki a kérés típusát</p>
+        <p>Válassza ki az üzenet típusát</p>
         <input type="radio" th:field="*{messageType}" id="install" th:value="install">
         <label th:for="install">Telepítés kérése</label>
         <input type="radio" th:field="*{messageType}" id="report_error" th:value="report_error">
         <label for="report_error">Hibabejelentés</label>
         <input type="radio" th:field="*{messageType}" id="other_msg" th:value="other_msg">
         <label for="other_msg">Egyéb üzenet</label>
-        <p><input type="text" th:field="*{messageText}" placeholder="Az üzenet szövege" required></p>
+        <p><label for="msgtext">Az üzenet:</label></p>
+        <p><textarea th:field="*{messageText}" id="msgtext" placeholder="Ide írja az üzenetét" required></textarea></p>
         <p><input type="submit" value="Küldés"></p>
     </fieldset>
 </form>

@@ -50,14 +50,15 @@ public class SzoftverleltarDbManager {
     public List<Message> getAllMessages() {
         try {
             Connect();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM uzenetek");
+            ResultSet resultSet = statement.executeQuery(
+                    "SELECT ido, felhasznalo_nev, uzenet_tipus, uzenet " +
+                    "FROM uzenetek ORDER BY ido DESC");
             List<Message> msgResult = new ArrayList<>();
             while (resultSet.next()) {
                 Message msgTemp = new Message();
-                msgTemp.setId(resultSet.getInt("id"));
-                msgTemp.setUserId(resultSet.getInt("felhasznalo_id"));
-                msgTemp.setUserName(resultSet.getString("felhasznalo_nev"));
                 msgTemp.setTime(resultSet.getTime("ido"));
+                msgTemp.setUserName(resultSet.getString("felhasznalo_nev"));
+                msgTemp.setMessageType(resultSet.getString("uzenet_tipus"));
                 msgTemp.setMessageText(resultSet.getString("uzenet"));
                 msgResult.add(msgTemp);
             }
@@ -66,7 +67,30 @@ public class SzoftverleltarDbManager {
             resultSet.close();
             return msgResult;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Message> getInstallStats () {
+        try {
+            Connect();
+            //TODO: correct the SQL query to a valid one, using all 3 tables
+            ResultSet resultSet = statement.executeQuery(
+                    "SELECT DISTINCT g.hely FROM telepites AS t" +
+                            "INNER JOIN gep AS g WHERE t.gepid = g.id" +
+                            "INNER JOIN szoftver AS s WHERE t.szoftverid = s.id"
+            );
+            List<Message> msgResult = new ArrayList<>();
+            //TODO: add the query results to the result set
+            while (resultSet.next()) {}
+            connection.close();
+            statement.close();
+            resultSet.close();
+            return msgResult;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 

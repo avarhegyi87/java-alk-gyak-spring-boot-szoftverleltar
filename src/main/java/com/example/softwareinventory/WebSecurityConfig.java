@@ -26,15 +26,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/resources/**", "/", "/nyitolap",
-                        "/telepitesek", "/kapcsolat", "/uzenetek", "/uzenetkuld",
-                        "/regisztral", "/regisztral_feldolgoz").permitAll()
+                .antMatchers("/resources/**", "/", "/home",
+                        "/installs", "/contact_us", "/all_messages", "/send_msg",
+                        "/register", "/process_registration").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().defaultSuccessUrl("/nyitolap").permitAll()
+                .formLogin().defaultSuccessUrl("/home").permitAll()
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/kijelentkezes"))
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").permitAll()
                 .and()
                 .exceptionHandling();

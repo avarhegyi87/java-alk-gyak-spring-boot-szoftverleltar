@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
 import java.sql.Time;
 
 public class Message {
@@ -15,16 +16,22 @@ public class Message {
     @Column(name = "felhasznalo_id", nullable = true)
     private Integer userId;
 
+    @NotNull
     @Column(name = "felhasznalo_nev", nullable = true)
     private String userName;
 
+    @NotNull
     @Column(name = "ido")
     private Time time;
 
+    @NotNull
+    @Pattern(regexp = "(^(install|report_error|other_msg)$)")
     @Column(name = "uzenet_tipus")
     private String messageType;
 
-    @Column(name = "uzenet", nullable = false)
+    @NotNull
+    @Size(max=255)
+    @Column(name = "return_msg", nullable = false)
     private String messageText;
 
     public Integer getId() {

@@ -24,7 +24,7 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/nyitolap")
+    @GetMapping("/home")
     public String nyitolap() {
         return "index";
     }
@@ -34,24 +34,30 @@ public class HomeController {
         return "admin";
     }
 
-    @GetMapping("/telepitesek")
+    @GetMapping("/installs")
     public String telepitesek() {
-        return "telepitesek";
+        return "installs";
     }
 
-    @GetMapping("/kapcsolat")
+    @GetMapping("/contact_us")
     public String kapcsolat(Model model) {
         model.addAttribute("msg", new Message());
-        return "kapcsolat";
+        return "contact_us";
     }
 
-    @GetMapping("/uzenetek")
+    @GetMapping("/all_messages")
     public String uzenetek(Model model) {
-        model.addAttribute("msg", new Message());
-        return "uzenetek";
+        try {
+            SzoftverleltarDbManager manager = new SzoftverleltarDbManager();
+            model.addAttribute("message_list",manager.getAllMessages());
+            return "all_messages";
+        } catch (Exception e) {
+            model.addAttribute("error_msg", "Hiba az adatbázis lehívásakor: " + e.getMessage());
+            return "all_messages";
+        }
     }
 
-    @PostMapping("/uzenetkuld")
+    @PostMapping("/send_msg")
     public String UzenetKuldes(@Valid @ModelAttribute Message message,
                         Model model,
                         @CurrentSecurityContext(expression = "authentication") Authentication auth,
@@ -68,39 +74,39 @@ public class HomeController {
             }
             message.setMessageType(getTextForMessageType(message.getMessageType()));
             if (manager.insertMessage(message)) {
-                return "uzenetjo";
+                return "msg_success";
             } else {
-                return "uzenethiba";
+                return "msg_error";
             }
 
         } catch (Exception e) {
-            model.addAttribute("uzenet", e.getMessage());
-            return "uzenethiba";
+            model.addAttribute("error_msg", e.getMessage());
+            return "msg_error";
         }
     }
 
-    @GetMapping("/regisztral")
+    @GetMapping("/register")
     public String greetingForm(Model model) {
         model.addAttribute("reg", new User());
-        return "regisztral";
+        return "register";
     }
 
     @Autowired
     private UserRepository userRepo;
 
-    @PostMapping("/regisztral_feldolgoz")
+    @PostMapping("/process_registration")
     public String Regisztracio(@Valid @ModelAttribute User user,
                                BindingResult bindingResult,
                                Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("uzenet", "Nem megfelelő formátumú felhasználónév, email cím, vagy jelszó");
-            return "reghiba";
+            model.addAttribute("error_msg", "Nem megfelelő formátumú felhasználónév, email cím, vagy jelszó");
+            return "reg_error";
         }
         try {
             for (User userCurrent : userRepo.findAll()) {
                 if (userCurrent.getEmail().equals(user.getEmail())) {
-                    model.addAttribute("uzenet", "Ez az email már foglalt!");
-                    return "reghiba";
+                    model.addAttribute("error_msg", "Ez az email már foglalt!");
+                    return "reg_error";
                 }
             }
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -114,10 +120,10 @@ public class HomeController {
             user.setRoles(roleList);
             userRepo.save(user);
             model.addAttribute("id", user.getId());
-            return "regjo";
+            return "reg_success";
         } catch (Exception e) {
-            model.addAttribute("uzenet", e.getMessage());
-            return "reghiba";
+            model.addAttribute("error_msg", e.getMessage());
+            return "reg_error";
         }
 
     }
