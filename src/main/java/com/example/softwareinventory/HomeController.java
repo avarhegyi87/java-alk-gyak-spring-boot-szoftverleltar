@@ -35,7 +35,13 @@ public class HomeController {
     }
 
     @GetMapping("/installs")
-    public String telepitesek() {
+    public String telepitesek(Model model) {
+        try {
+            SzoftverleltarDbManager manager = new SzoftverleltarDbManager();
+            model.addAttribute("all_installs", manager.getInstallStats());
+        } catch (Exception e) {
+            model.addAttribute("error_msg", e.getMessage());
+        }
         return "installs";
     }
 
@@ -94,7 +100,7 @@ public class HomeController {
     @Autowired
     private UserRepository userRepo;
 
-    @PostMapping("/process_registration")
+    @PostMapping("/registration_processing")
     public String Regisztracio(@Valid @ModelAttribute User user,
                                BindingResult bindingResult,
                                Model model) {
@@ -105,7 +111,11 @@ public class HomeController {
         try {
             for (User userCurrent : userRepo.findAll()) {
                 if (userCurrent.getEmail().equals(user.getEmail())) {
-                    model.addAttribute("error_msg", "Ez az email már foglalt!");
+                    model.addAttribute("error_msg", "Már regisztrálta ezt az email címet!");
+                    return "reg_error";
+                }
+                if (userCurrent.getUsername().equals(user.getUsername())) {
+                    model.addAttribute("error_msg","Ez a felhasználónév már foglalt. Válasszon másikat!");
                     return "reg_error";
                 }
             }

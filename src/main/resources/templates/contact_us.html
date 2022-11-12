@@ -7,7 +7,7 @@
 <body>
 <div th:insert="menu"></div>
 <h3>Küldjön nekünk üzenetet!</h3>
-<form action="#" th:action="@{/uzenetkuld}" th:object="${msg}" method="post">
+<form action="#" th:action="@{/send_msg}" th:object="${msg}" method="post">
     <fieldset>
         <legend>Üzenete</legend>
         <p>Válassza ki az üzenet típusát</p>

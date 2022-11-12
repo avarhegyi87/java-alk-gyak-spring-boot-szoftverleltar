@@ -1,6 +1,7 @@
 package com.example.softwareinventory;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "gep")

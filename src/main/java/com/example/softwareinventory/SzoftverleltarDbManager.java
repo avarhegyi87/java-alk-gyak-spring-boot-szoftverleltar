@@ -72,22 +72,39 @@ public class SzoftverleltarDbManager {
         }
     }
 
-    public List<Message> getInstallStats () {
+    public List<Install> getInstallStats () {
         try {
             Connect();
-            //TODO: correct the SQL query to a valid one, using all 3 tables
             ResultSet resultSet = statement.executeQuery(
-                    "SELECT DISTINCT g.hely FROM telepites AS t" +
-                            "INNER JOIN gep AS g WHERE t.gepid = g.id" +
-                            "INNER JOIN szoftver AS s WHERE t.szoftverid = s.id"
+                    "SELECT s.nev AS software_name, s.kategoria AS software_type, " +
+                            "SUM(CASE WHEN g.tipus = 'notebook' THEN 1 ELSE 0 END) AS notebook_count, " +
+                            "SUM(CASE WHEN g.tipus = 'asztali' THEN 1 ELSE 0 END) AS desktop_count " +
+                            "FROM telepites AS t " +
+                            "INNER JOIN szoftver AS s ON s.id = t.szoftverid " +
+                            "INNER JOIN gep AS g ON g.id = t.gepid " +
+                            "GROUP BY s.nev " +
+                            "ORDER BY s.nev"
             );
-            List<Message> msgResult = new ArrayList<>();
-            //TODO: add the query results to the result set
-            while (resultSet.next()) {}
+            List<Install> installList = new ArrayList<>();
+            while (resultSet.next()) {
+                Software software = new Software();
+                Comp computer = new Comp();
+                Install install = new Install();
+
+                software.setNev(resultSet.getString("software_name"));
+                software.setKategoria(resultSet.getString("software_type"));
+
+                install.setSoftware(software);
+                install.setComputer(computer);
+                install.setInstallCount_Notebook(resultSet.getInt("notebook_count"));
+                install.setInstallCount_Desktop(resultSet.getInt("desktop_count"));
+
+                installList.add(install);
+            }
             connection.close();
             statement.close();
             resultSet.close();
-            return msgResult;
+            return installList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;

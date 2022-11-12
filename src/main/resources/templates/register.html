@@ -7,7 +7,7 @@
 <body>
 <div th:insert="menu"></div>
 <h3>Regisztrálja magát!</h3>
-<form action="#" th:action="@{/regisztral_feldolgoz}" th:object="${reg}" method="post">
+<form action="#" th:action="@{/registration_processing}" th:object="${reg}" method="post">
   <fieldset>
     <legend>Regisztráció</legend>
     <p><input type="text" th:field="*{username}" placeholder="Felhasználónév" required></p>

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,7 +10,7 @@
 <div th:insert="menu"></div>
 <table>
     <thead>
-    <tr th:if="${!(message_list.isEmpty() || error_msg.isEmpty())}">
+    <tr th:if="${!message_list.isEmpty()} and ${#strings.isEmpty(error_msg)}">
         <th>Beküldés ideje</th>
         <th>Felhasználó</th>
         <th>Üzenet típusa</th>
@@ -20,7 +22,7 @@
         <br><td>${error_msg}</td>
     </tr>
     <tr th:if="${message_list.isEmpty()}">
-        <br><td>Nincsen megjelnítendő üzenet.</td>
+        <br><td>Nincsen megjelenítendő üzenet.</td>
     </tr>
     <tr th:each="message : ${message_list}">
         <td><span th:text="${message.time}"></span></td>

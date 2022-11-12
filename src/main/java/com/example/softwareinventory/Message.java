@@ -16,11 +16,9 @@ public class Message {
     @Column(name = "felhasznalo_id", nullable = true)
     private Integer userId;
 
-    @NotNull
     @Column(name = "felhasznalo_nev", nullable = true)
     private String userName;
 
-    @NotNull
     @Column(name = "ido")
     private Time time;
 
@@ -31,7 +29,7 @@ public class Message {
 
     @NotNull
     @Size(max=255)
-    @Column(name = "return_msg", nullable = false)
+    @Column(name = "uzenet", nullable = false)
     private String messageText;
 
     public Integer getId() {
