@@ -10,14 +10,36 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.softwareinventory.Message.getTextForMessageType;
+import static java.lang.Long.parseLong;
 
 @Controller
+
 public class HomeController {
     @GetMapping("/")
     public String home() {
@@ -33,6 +55,8 @@ public class HomeController {
     public String admin() {
         return "admin";
     }
+
+
 
     @GetMapping("/installs")
     public String telepitesek(Model model) {
@@ -55,7 +79,7 @@ public class HomeController {
     public String uzenetek(Model model) {
         try {
             SzoftverleltarDbManager manager = new SzoftverleltarDbManager();
-            model.addAttribute("message_list",manager.getAllMessages());
+            model.addAttribute("message_list", manager.getAllMessages());
             return "all_messages";
         } catch (Exception e) {
             model.addAttribute("error_msg", "Hiba az adatbázis lehívásakor: " + e.getMessage());
@@ -65,8 +89,8 @@ public class HomeController {
 
     @PostMapping("/send_msg")
     public String UzenetKuldes(@Valid @ModelAttribute Message message,
-                        Model model,
-                        @CurrentSecurityContext(expression = "authentication") Authentication auth,
+                               Model model,
+                               @CurrentSecurityContext(expression = "authentication") Authentication auth,
                                @CurrentSecurityContext(expression = "authentication?.name") String loggInUserName) {
         try {
             SzoftverleltarDbManager manager = new SzoftverleltarDbManager();
@@ -115,7 +139,7 @@ public class HomeController {
                     return "reg_error";
                 }
                 if (userCurrent.getUsername().equals(user.getUsername())) {
-                    model.addAttribute("error_msg","Ez a felhasználónév már foglalt. Válasszon másikat!");
+                    model.addAttribute("error_msg", "Ez a felhasználónév már foglalt. Válasszon másikat!");
                     return "reg_error";
                 }
             }
@@ -137,4 +161,53 @@ public class HomeController {
         }
 
     }
+
+    @GetMapping("/rest/visual")
+    public static String Rest(Model model) throws ClientProtocolException, IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://localhost:1000/rest");
+        HttpResponse response = client.execute(request);
+        BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+        String line = "";
+        List<Rest> sorok = new ArrayList<Rest>();
+
+        String adat = "";
+        while ((line = rd.readLine()) != null) {
+            adat = line;
+
+        }
+        String delimiter = ",\\{";
+        adat = adat.replaceAll("[\\[\\]]", "");
+        String[] adattomb = adat.split(delimiter);
+
+
+        for (String data : adattomb) {
+            String valami;
+            if (!data.contains("{")) {
+                valami = "{" + data;
+            } else {
+                valami = data;
+            }
+            System.out.println(valami);
+            JSONObject jsonObject = new JSONObject(valami);
+            List<String> jsontmb = new ArrayList<String>();
+            Rest r = new Rest();
+            jsonObject.keySet().forEach(keyStr ->
+            {
+                Object keyvalue = jsonObject.get(keyStr);
+                jsontmb.add(String.valueOf(keyvalue));
+            });
+            System.out.println(jsontmb);
+            r.setId(parseLong(jsontmb.get(3)));
+            r.setBrand(jsontmb.get(4));
+            r.setModel(jsontmb.get(2));
+            r.setPrice(parseLong(jsontmb.get(1)));
+            r.setYear(parseLong(jsontmb.get(0)));
+            sorok.add(r);
+        }
+        model.addAttribute("usr", sorok);
+        return "rest";
+    }
+
+
 }

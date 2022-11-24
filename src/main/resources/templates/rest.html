@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Telefonok</title>
+</head>
+<body>
+<h1>Telefonok</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Azonosító</th>
+        <th>Márka</th>
+        <th>Modell</th>
+        <th>Ár</th>
+        <th>Gyártási év</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="us : ${usr}">
+        <td><span th:text="${us.id}"></span></td>
+        <td><span th:text="${us.brand}"></span></td>
+        <td><span th:text="${us.model}"></span></td>
+        <td><span th:text="${us.price}"></span></td>
+        <td><span th:text="${us.year}"></span></td>
+    </tr>
+    </tbody>
+</table>
+<!--
+<form action="#" th:action="@{/rest/}" th:object="${attr1}" method="post">
+    <p>Azonosító: <input type="text" th:field="*{id}" /></p>
+    <p>Név: <input type="text" th:field="*{felhasznalonev}" /></p>
+    <p>E-mail: <input type="text" th:field="*{email}" /></p>
+    <p>Jelszó: <input type="password" th:field="*{jelszo}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form> -->
+</body>
+</html>

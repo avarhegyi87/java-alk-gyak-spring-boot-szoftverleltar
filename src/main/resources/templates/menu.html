@@ -1,22 +1,41 @@
+<style>
+
+.hover{
+padding-top:20px;
+padding-bottom:20px;
+color:#ffffff;
+text-decoration:none;
+}
+.hover:hover
+{
+color:#ffffff;
+background-color:rgba(10, 10, 255, .6);
+text-decoration:none;
+}
+
+</style>
+
 <div xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <div>
-        <a th:href="@{/home}">Nyitólap</a>
-        <a th:href="@{/installs}">Telepítések</a>
-        <a th:href="@{/contact_us}">Írjon nekünk!</a>
-        <a th:href="@{/all_messages}">Önök küldték</a>
+    <div >
+        <a th:href="@{/home}" class="hover">Nyitólap</a>
+        <a th:href="@{/installs}" class="hover">Telepítések</a>
+        <a th:href="@{/contact_us}" class="hover">Írjon nekünk!</a>
+        <a th:href="@{/all_messages}" class="hover">Önök küldték</a>
         <span sec:authorize="isAnonymous()">
-            <a th:href="@{/login}">Bejelentkezés</a>
-            <a th:href="@{/register}">Regisztráció</a>
+            <a th:href="@{/login}" class="hover">Bejelentkezés</a>
+            <a th:href="@{/register}" class="hover">Regisztráció</a>
         </span>
         <span sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}">Kijelentkezés</a>
+            <a th:href="@{/logout}" class="hover">Kijelentkezés</a>
         </span>
         <span sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/admin/home}">Admin</a>
+            <a th:href="@{/admin/home}" class="hover">Admin</a>
+            <a th:href="@{/rest/visual}" class="hover">Telefonok</a>
         </span>
     </div>
     <div sec:authorize="isAuthenticated()">
         <h3>Üdvözöljük <span sec:authentication="principal.username"></span></h3>
     </div>
 </div>
+
