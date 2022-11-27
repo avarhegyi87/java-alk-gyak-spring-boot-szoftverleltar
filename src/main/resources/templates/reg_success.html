@@ -1,11 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
-    <title>Sikeres bejelentkezés</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>Sikeres regisztráció</title>
 </head>
+
 <body>
-<div th:insert="menu"></div>
-<h1 th:utext="'A regisztrációja sikeres. <br/> Azonosítója: ' + ${id}" />
+<div class="bg">
+    <div class="jumbotron jumbotron-fluid text-center hbg" style="margin-bottom:0;">
+        <h1 class="headertxt">Szoftverleltár</h1>
+        <h2 class="headertxt">Java gyakorlati beadandó feladat</h2>
+    </div>
+    <div th:insert="menu" class="menu"></div>
+    <div class="contentbg">
+<h1 class="contenttxt" th:utext="'A regisztrációja sikeres. <br/> Azonosítója: ' + ${id}" />
+    </div>
+    <div class="jumbotron text-center footeralign" style="margin-top: 60px">
+        <footer>
+            &copy; Várhegyi-Miłoś Ádám, Csabai Albert 2022
+        </footer>
+    </div>
+</div>
 </body>
+<style>
+    html {
+     height: 100vh;
+  width: 100vw;
+}
+body {
+     height: 100vh;
+  width: 100vw;
+}
+.bg{
+height:100%;
+overflow: auto;
+background-image: url('https://wallpaperaccess.com/full/266543.jpg');
+background-size: contain;
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: 100% 100%;
+}
+.hbg{
+background-image: url('https://nki.gov.hu/wp-content/uploads/2020/06/AdobeStock_317396428.jpg');
+background-size: cover;
+background-repeat:   no-repeat;
+}
+.menu{
+width:100%;
+ text-align: center;
+  margin-top:-1px;
+  margin-bottom:80px;
+  background-color:#111111;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+.contentbg{
+width:80%;
+ margin:auto;
+  background-color:rgba(0, 0, 0, .9);
+  margin-botttom:200px;
+  margin-top:80px;
+  padding-top:40px;
+  padding-bottom:40px;
+}
+.headertxt{
+text-shadow: 2px 2px 10px #ffffff; background-color:rgba(100, 200, 255, .5);
+}
+
+.contenttxt{
+text-align: center;
+color:#ffffff;
+}
+.footeralign{
+margin-bottom:0;
+margin-top:0;
+}
+
+</style>
 </html>

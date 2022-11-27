@@ -2,34 +2,106 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <title>Telepítések</title>
 </head>
+
 <body>
-<div th:insert="menu"></div>
+<div class="bg">
+    <div class="jumbotron jumbotron-fluid text-center hbg" style="margin-bottom:0;">
+        <h1 class="headertxt">Szoftverleltár</h1>
+        <h2 class="headertxt">Java gyakorlati beadandó feladat</h2>
+    </div>
+    <div th:insert="menu" class="menu"></div>
+    <div class="contentbg">
+
 <span sec:authorize="isAnonymous()">
-  <h3>A telepítések megtekintéséhez kérjük <a href="/login">jelentkezzen be</a></h3>
+  <h3 class="contenttxt">A telepítések megtekintéséhez kérjük <a href="/login">jelentkezzen be</a></h3>
 </span>
 <span sec:authorize="isAuthenticated()">
     <table>
         <thead>
         <tr>
-            <th>Szoftver neve</th>
-            <th>Szoftver leírása</th>
-            <th>Notebookra telepítve (db)</th>
-            <th>Asztali számítógépre telepítve (db)</th>
+            <th class="contenttxt">Szoftver neve</th>
+            <th class="contenttxt">Szoftver leírása</th>
+            <th class="contenttxt">Notebookra telepítve (db)</th>
+            <th class="contenttxt">Asztali számítógépre telepítve (db)</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="install_data : ${all_installs}">
-            <td><span th:text="${install_data.software.nev}"></span></td>
-            <td><span th:text="${install_data.software.kategoria}"></span></td>
-            <td><span th:text="${install_data.installCount_Notebook}"></span></td>
-            <td><span th:text="${install_data.installCount_Desktop}"></span></td>
+            <td class="contenttxt"><span th:text="${install_data.software.nev}"></span></td>
+            <td class="contenttxt"><span th:text="${install_data.software.kategoria}"></span></td>
+            <td class="contenttxt"><span th:text="${install_data.installCount_Notebook}"></span></td>
+            <td class="contenttxt"><span th:text="${install_data.installCount_Desktop}"></span></td>
         </tr>
         </tbody>
     </table>
 </span>
+    </div>
+    <div class="jumbotron text-center footeralign" style="margin-top: 60px">
+        <footer>
+            &copy; Várhegyi-Miłoś Ádám, Csabai Albert 2022
+        </footer>
+    </div>
+</div>
 </body>
+<style>
+    html {
+     height: 100vh;
+  width: 100vw;
+}
+body {
+     height: 100vh;
+  width: 100vw;
+}
+.bg{
+height:100%;
+overflow: auto;
+background-image: url('https://wallpaperaccess.com/full/266543.jpg');
+background-size: contain;
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: 100% 100%;
+}
+.hbg{
+background-image: url('https://nki.gov.hu/wp-content/uploads/2020/06/AdobeStock_317396428.jpg');
+background-size: cover;
+background-repeat:   no-repeat;
+}
+.menu{
+width:100%;
+ text-align: center;
+  margin-top:-1px;
+  margin-bottom:80px;
+  background-color:#111111;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+.contentbg{
+width:80%;
+ margin:auto;
+  background-color:rgba(0, 0, 0, .9);
+  margin-botttom:200px;
+  margin-top:80px;
+  padding-top:40px;
+  padding-bottom:40px;
+}
+.headertxt{
+text-shadow: 2px 2px 10px #ffffff; background-color:rgba(100, 200, 255, .5);
+}
+
+.contenttxt{
+text-align: center;
+color:#ffffff;
+}
+.footeralign{
+margin-bottom:0;
+margin-top:0;
+}
+
+</style>
 </html>
