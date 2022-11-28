@@ -10,36 +10,22 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
-import org.json.JSONArray;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import static com.example.softwareinventory.Message.getTextForMessageType;
 import static java.lang.Long.parseLong;
 
 @Controller
-
 public class HomeController {
     @GetMapping("/")
     public String home() {
@@ -55,8 +41,6 @@ public class HomeController {
     public String admin() {
         return "admin";
     }
-
-
 
     @GetMapping("/installs")
     public String telepitesek(Model model) {
@@ -79,7 +63,7 @@ public class HomeController {
     public String uzenetek(Model model) {
         try {
             SzoftverleltarDbManager manager = new SzoftverleltarDbManager();
-            model.addAttribute("message_list", manager.getAllMessages());
+            model.addAttribute("message_list",manager.getAllMessages());
             return "all_messages";
         } catch (Exception e) {
             model.addAttribute("error_msg", "Hiba az adatbázis lehívásakor: " + e.getMessage());
@@ -139,7 +123,7 @@ public class HomeController {
                     return "reg_error";
                 }
                 if (userCurrent.getUsername().equals(user.getUsername())) {
-                    model.addAttribute("error_msg", "Ez a felhasználónév már foglalt. Válasszon másikat!");
+                    model.addAttribute("error_msg","Ez a felhasználónév már foglalt. Válasszon másikat!");
                     return "reg_error";
                 }
             }
@@ -152,7 +136,9 @@ public class HomeController {
             roleList = new ArrayList<Role>();
             roleList.add(role);
             user.setRoles(roleList);
+            System.out.println(user.getUsername());
             userRepo.save(user);
+
             model.addAttribute("id", user.getId());
             return "reg_success";
         } catch (Exception e) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Nov 27. 15:47
+-- Létrehozás ideje: 2022. Nov 28. 09:52
 -- Kiszolgáló verziója: 10.4.24-MariaDB
 -- PHP verzió: 8.1.4
 
@@ -33,19 +33,20 @@ CREATE TABLE `felhasznalok` (
   `id` int(11) NOT NULL,
   `felhasznalonev` varchar(40) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `jelszo` varchar(255) NOT NULL,
-  `szerepkor_id` bigint(20) NOT NULL
+  `jelszo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `felhasznalok`
 --
 
-INSERT INTO `felhasznalok` (`id`, `felhasznalonev`, `email`, `jelszo`, `szerepkor_id`) VALUES
-(2, 'adamvm', 'avarhegyi87@gmail.com', '$2a$10$uynFoV2iWhU4JX3vvr9c2.wcz6XdpqR5V31lQ2nv1HoHuvzXW6ETW', 0),
-(3, 'user', 'user@gmail.com', '$2a$10$XdjnAECrleL/yxd3CezeEuMQI8KL9NZonfB8fDYH0ksgFKJcXfFiW', 0),
-(7, 'user2', 'user2@gmail.com', '$2a$10$QavK1wlaxkFTjWBLssMAhuroAoZYGPhwAeDFwXMFJJNpQkO1gxejq', 0),
-(8, 'csaalb', 'csaalb@csamail.com', '$2a$10$hP.ll6HMDoabuuNbm5r0QO38QSissr4YaKxQnrvG5UMz7UZ9.VHVm', 0);
+INSERT INTO `felhasznalok` (`id`, `felhasznalonev`, `email`, `jelszo`) VALUES
+(2, 'adamvm', 'avarhegyi87@gmail.com', '$2a$10$uynFoV2iWhU4JX3vvr9c2.wcz6XdpqR5V31lQ2nv1HoHuvzXW6ETW'),
+(3, 'user', 'user@gmail.com', '$2a$10$XdjnAECrleL/yxd3CezeEuMQI8KL9NZonfB8fDYH0ksgFKJcXfFiW'),
+(7, 'user2', 'user2@gmail.com', '$2a$10$QavK1wlaxkFTjWBLssMAhuroAoZYGPhwAeDFwXMFJJNpQkO1gxejq'),
+(9, 'Béla bácsi', 'belaba@belamail.com', '$2a$10$.YTYBFvMjUcA7cZWV/sRT.Bc2mHiAbfvycAlosMMZIThEhpZPP56q'),
+(10, 'Jani Bácsi', 'janiba@janimail.com', '$2a$10$6s1Ictn4fhoE..Rtp2Qe6e0WR42xzi52p/OFoULwadCs6SYCF.iYi'),
+(11, 'csaalb', 'csaalb@csamail.com', '$2a$10$q8KSs84L17j/qK.KWrtnfuuCQXQ2Z/BlOZPRV9El5zX428dmxbLSm');
 
 -- --------------------------------------------------------
 
@@ -55,35 +56,22 @@ INSERT INTO `felhasznalok` (`id`, `felhasznalonev`, `email`, `jelszo`, `szerepko
 
 CREATE TABLE `felh_szerepkorok` (
   `felhasznalo_id` int(11) NOT NULL,
-  `szerepkor_id` int(11) NOT NULL,
-  `id` bigint(20) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `felhasznalonev` varchar(255) DEFAULT NULL,
-  `jelszo` varchar(255) DEFAULT NULL
+  `szerepkor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `felh_szerepkorok`
 --
 
-INSERT INTO `felh_szerepkorok` (`felhasznalo_id`, `szerepkor_id`, `id`, `email`, `felhasznalonev`, `jelszo`) VALUES
-(2, 1, 0, NULL, NULL, NULL),
-(2, 2, 0, NULL, NULL, NULL),
-(3, 2, 0, NULL, NULL, NULL),
-(7, 2, 0, NULL, NULL, NULL),
-(8, 1, 0, NULL, NULL, NULL),
-(8, 2, 0, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `felh_szerepkorok_userek`
---
-
-CREATE TABLE `felh_szerepkorok_userek` (
-  `u_roles_felhasznalo_id` bigint(20) NOT NULL,
-  `userek_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `felh_szerepkorok` (`felhasznalo_id`, `szerepkor_id`) VALUES
+(2, 1),
+(2, 2),
+(3, 2),
+(7, 2),
+(9, 2),
+(10, 2),
+(11, 1),
+(11, 2);
 
 -- --------------------------------------------------------
 
@@ -220,30 +208,17 @@ INSERT INTO `phones` (`id`, `brand`, `model`, `price`, `year`) VALUES
 
 CREATE TABLE `szerepkorok` (
   `id` int(11) NOT NULL,
-  `szerepkor` varchar(20) NOT NULL,
-  `felhasznalo_id` int(11) NOT NULL,
-  `szerepkor_id` varchar(255) NOT NULL
+  `szerepkor` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `szerepkorok`
 --
 
-INSERT INTO `szerepkorok` (`id`, `szerepkor`, `felhasznalo_id`, `szerepkor_id`) VALUES
-(1, 'ROLE_ADMIN', 0, ''),
-(2, 'ROLE_USER', 0, ''),
-(3, 'ROLE_GUEST', 0, '');
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `szerepkorok_userek`
---
-
-CREATE TABLE `szerepkorok_userek` (
-  `u_roles_felhasznalo_id` bigint(20) NOT NULL,
-  `userek_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `szerepkorok` (`id`, `szerepkor`) VALUES
+(1, 'ROLE_ADMIN'),
+(2, 'ROLE_USER'),
+(3, 'ROLE_GUEST');
 
 -- --------------------------------------------------------
 
@@ -2717,20 +2692,6 @@ INSERT INTO `telepites` (`id`, `gepid`, `szoftverid`, `verzio`, `datum`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `users`
---
-
-CREATE TABLE `users` (
-  `id` bigint(20) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `felhasznalonev` varchar(255) DEFAULT NULL,
-  `jelszo` varchar(255) DEFAULT NULL,
-  `szerepkor_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Tábla szerkezet ehhez a táblához `uzenetek`
 --
 
@@ -2748,9 +2709,9 @@ CREATE TABLE `uzenetek` (
 --
 
 INSERT INTO `uzenetek` (`id`, `felhasznalo_id`, `felhasznalo_nev`, `ido`, `uzenet_tipus`, `uzenet`) VALUES
-(1, 8, 'csaalb@csamail.com', '2022-11-20 18:35:28', 'Hibabejelentés', 'Nem jó.'),
-(2, 8, 'csaalb@csamail.com', '2022-11-20 18:35:53', 'Telepítés kérése', 'Hiányzik a valami.'),
-(3, NULL, 'Vendég', '2022-11-27 15:35:31', 'Hibabejelentés', 'Nem jó még mindig!');
+(1, NULL, 'Vendég', '2022-11-27 19:58:36', 'Telepítés kérése', 'Kell a izé\r\n'),
+(2, NULL, 'Vendég', '2022-11-27 19:58:49', 'Hibabejelentés', 'Nem működik.'),
+(3, NULL, 'Vendég', '2022-11-27 19:59:15', 'Egyéb üzenet', 'Mostmár jó!');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -2804,12 +2765,6 @@ ALTER TABLE `telepites`
   ADD KEY `szoftverid` (`szoftverid`);
 
 --
--- A tábla indexei `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
 -- A tábla indexei `uzenetek`
 --
 ALTER TABLE `uzenetek`
@@ -2823,7 +2778,7 @@ ALTER TABLE `uzenetek`
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT a táblához `gep`
@@ -2854,12 +2809,6 @@ ALTER TABLE `szoftver`
 --
 ALTER TABLE `telepites`
   MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2345;
-
---
--- AUTO_INCREMENT a táblához `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `uzenetek`
