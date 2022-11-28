@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <title>Üzenet küldés</title>
+    <title>Telefonok GET</title>
 </head>
 
 <body>
@@ -15,30 +15,31 @@
     </div>
     <div th:insert="menu" class="menu"></div>
     <div class="contentbg">
-<h3 class="contenttxt">Küldjön nekünk üzenetet!</h3>
-<form style="margin: auto;" action="#" th:action="@{/send_msg}" th:object="${msg}" method="post">
-    <fieldset>
-        <legend class="contenttxt">Üzenete</legend>
-        <p class="contenttxt">Válassza ki az üzenet típusát</p>
-        <div style="margin: auto; width: fit-content;">
-        <input type="radio" th:field="*{messageType}" id="install" th:value="install">
-        <label class="contenttxt" th:for="install">Telepítés kérése</label><br>
-        </div >
-        <div style="margin: auto; width: fit-content;">
-        <input type="radio" th:field="*{messageType}" id="report_error" th:value="report_error">
-        <label class="contenttxt" for="report_error">Hibabejelentés</label><br>
-        </div>
-        <div style="margin: auto; width: fit-content;">
-        <input type="radio" th:field="*{messageType}" id="other_msg" th:value="other_msg">
-        <label class="contenttxt" for="other_msg">Egyéb üzenet</label><br>
-        </div>
-        <p style="margin: auto; width: fit-content;"><label class="contenttxt" for="msgtext">Az üzenet:</label></p>
-        <p style="margin: auto; width: fit-content;"><textarea th:field="*{messageText}" id="msgtext" placeholder="Ide írja az üzenetét" required></textarea></p>
-        <p style="margin: auto; width: fit-content;"><input  type="submit" value="Küldés"></p>
-    </fieldset>
-</form>
+<h1 class="contenttxt">Telefonok</h1>
+
+<table style="margin:auto">
+    <thead>
+    <tr>
+        <th class="contenttxt">Azonosító</th>
+        <th class="contenttxt">Márka</th>
+        <th class="contenttxt">Modell</th>
+        <th class="contenttxt">Ár</th>
+        <th class="contenttxt">Gyártási év</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="us : ${usr}">
+        <td class="contenttxt"><span th:text="${us.id}"></span></td>
+        <td class="contenttxt"><span th:text="${us.brand}"></span></td>
+        <td class="contenttxt"><span th:text="${us.model}"></span></td>
+        <td class="contenttxt"><span th:text="${us.price}"></span></td>
+        <td class="contenttxt"><span th:text="${us.year}"></span></td>
+    </tr>
+    </tbody>
+</table>
     </div>
-    <div class="jumbotron text-center footeralign" style="margin-top: 60px">
+    <div class="jumbotron text-center footeralign"  style="margin-top: 60px">
         <footer>
             &copy; Várhegyi-Miłoś Ádám, Csabai Albert 2022
         </footer>
