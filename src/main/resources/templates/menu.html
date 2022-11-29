@@ -1,42 +1,44 @@
 <style>
 
-.hover{
-padding-top:20px;
-padding-bottom:20px;
-color:#ffffff;
-text-decoration:none;
-}
-.hover:hover
-{
-color:#ffffff;
-background-color:rgba(10, 10, 255, .6);
-text-decoration:none;
-}
+    .hover {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .hover:hover {
+        color: #ffffff;
+        background-color: rgba(10, 10, 255, .6);
+        text-decoration: none;
+    }
 
 
 </style>
 
 <div xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <div>
-        <a th:href="@{/home}" class="hover">Nyitólap</a>
-        <a th:href="@{/installs}" class="hover">Telepítések</a>
-        <a th:href="@{/contact_us}" class="hover">Írjon nekünk!</a>
-        <a th:href="@{/all_messages}" class="hover">Önök küldték</a>
-        <span sec:authorize="isAnonymous()">
+    <nav>
+        <div>
+            <a th:href="@{/home}" class="hover">Nyitólap</a>
+            <a th:href="@{/installs}" class="hover">Telepítések</a>
+            <a th:href="@{/contact_us}" class="hover">Írjon nekünk!</a>
+            <a th:href="@{/all_messages}" class="hover">Önök küldték</a>
+            <span sec:authorize="isAnonymous()">
             <a th:href="@{/login}" class="hover">Bejelentkezés</a>
             <a th:href="@{/register}" class="hover">Regisztráció</a>
         </span>
-        <span sec:authorize="isAuthenticated()">
+            <span sec:authorize="isAuthenticated()">
             <a th:href="@{/logout}" class="hover">Kijelentkezés</a>
         </span>
-        <span sec:authorize="hasRole('ROLE_ADMIN')">
+            <span sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/admin/home}" class="hover">Admin</a>
             <a th:href="@{/rest/visual}" class="hover">Telefonok</a>
         </span>
-    </div>
+        </div>
+    </nav>
     <div style="padding-top: 30px;" sec:authorize="isAuthenticated()">
-        <h3 style="color:#ffffff">Üdvözöljük <span sec:authentication="principal.username"></span></h3>
+        <h6 style="color:#ffffff">Üdvözöljük <span sec:authentication="principal.username"></span></h6>
     </div>
 </div>
 
