@@ -15,16 +15,17 @@
     </div>
     <div th:insert="menu" class="menu"></div>
     <div class="contentbg">
-<h3 class="contenttxt">Regisztrálja magát!</h3>
-<form action="#" th:action="@{/registration_processing}" th:object="${reg}" method="post">
-  <fieldset>
-    <legend class="contenttxt">Regisztráció</legend>
-    <p class="contenttxt"><input type="text" th:field="*{username}" placeholder="Felhasználónév" required></p>
-    <p class="contenttxt"><input type="email" th:field="*{email}" placeholder="Email cím"></p>
-    <p class="contenttxt"><input type="password" th:field="*{password}" placeholder="Jelszó" required></p>
-    <p class="contenttxt"><input type="submit" value="Regisztráció"></p>
-  </fieldset>
-</form>
+        <h3 class="contenttxt">Regisztrálja magát!</h3>
+        <form action="#" th:action="@{/registration_processing}" th:object="${reg}" method="post">
+            <fieldset>
+                <legend class="contenttxt">Regisztráció</legend>
+                <p class="contenttxt"><input type="text" th:field="*{username}" placeholder="Felhasználónév" required>
+                </p>
+                <p class="contenttxt"><input type="email" th:field="*{email}" placeholder="Email cím" required></p>
+                <p class="contenttxt"><input type="password" th:field="*{password}" placeholder="Jelszó" required></p>
+                <p class="contenttxt"><input type="submit" value="Regisztráció"></p>
+            </fieldset>
+        </form>
     </div>
     <div class="jumbotron text-center footeralign" style="margin-top: 60px">
         <footer>
@@ -35,57 +36,65 @@
 </body>
 <style>
     html {
-     height: 100vh;
-  width: 100vw;
-}
-body {
-     height: 100vh;
-  width: 100vw;
-}
-.bg{
-height:100%;
-overflow: auto;
-background-image: url('https://wallpaperaccess.com/full/266543.jpg');
-background-size: contain;
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-size: 100% 100%;
-}
-.hbg{
-background-image: url('https://nki.gov.hu/wp-content/uploads/2020/06/AdobeStock_317396428.jpg');
-background-size: cover;
-background-repeat:   no-repeat;
-}
-.menu{
-width:100%;
- text-align: center;
-  margin-top:-1px;
-  margin-bottom:80px;
-  background-color:#111111;
-  padding-top:20px;
-  padding-bottom:20px;
-}
-.contentbg{
-width:80%;
- margin:auto;
-  background-color:rgba(0, 0, 0, .9);
-  margin-botttom:200px;
-  margin-top:80px;
-  padding-top:40px;
-  padding-bottom:40px;
-}
-.headertxt{
-text-shadow: 2px 2px 10px #ffffff; background-color:rgba(100, 200, 255, .5);
-}
+        height: 100vh;
+        width: 100vw;
+    }
 
-.contenttxt{
-text-align: center;
-color:#ffffff;
-}
-.footeralign{
-margin-bottom:0;
-margin-top:0;
-}
+    body {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .bg {
+        height: 100%;
+        overflow: auto;
+        background-image: url('https://wallpaperaccess.com/full/266543.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+
+    .hbg {
+        background-image: url('https://nki.gov.hu/wp-content/uploads/2020/06/AdobeStock_317396428.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .menu {
+        width: 100%;
+        text-align: center;
+        margin-top: -1px;
+        margin-bottom: 80px;
+        background-color: #111111;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .contentbg {
+        width: 80%;
+        margin: auto;
+        background-color: rgba(0, 0, 0, .9);
+        margin-botttom: 200px;
+        margin-top: 80px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .headertxt {
+        text-shadow: 2px 2px 10px #ffffff;
+        background-color: rgba(100, 200, 255, .5);
+    }
+
+    .contenttxt {
+        text-align: center;
+        color: #ffffff;
+    }
+
+    .footeralign {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
 
 </style>
 </html>
