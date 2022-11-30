@@ -23,7 +23,7 @@ public class User {
     private String email;
 
     @NotNull
-    @Size(max=255)
+    @Size(min=8, max=255)
     @Column(name = "jelszo")
     private String password;
 
