@@ -73,9 +73,14 @@ public class HomeController {
 
     @PostMapping("/send_msg")
     public String UzenetKuldes(@Valid @ModelAttribute Message message,
+                               BindingResult bindingResult,
                                Model model,
                                @CurrentSecurityContext(expression = "authentication") Authentication auth,
                                @CurrentSecurityContext(expression = "authentication?.name") String loggInUserName) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error_msg", "Túl hosszú az üzenet, vagy nem lett kiválasztva üzenettípus.");
+            return "msg_error";
+        }
         try {
             SzoftverleltarDbManager manager = new SzoftverleltarDbManager();
             //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -90,6 +95,7 @@ public class HomeController {
             if (manager.insertMessage(message)) {
                 return "msg_success";
             } else {
+                model.addAttribute("error_msg", "Az üzenetet nem sikerült elküldeni az adatbázisba.");
                 return "msg_error";
             }
 
